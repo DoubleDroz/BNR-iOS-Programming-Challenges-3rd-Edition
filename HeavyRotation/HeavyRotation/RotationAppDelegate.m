@@ -1,71 +1,45 @@
 //
-//  HypnosisterAppDelegate.m
-//  Hypnosister
+//  RotationAppDelegate.m
+//  HeavyRotation
 //
-//  Created by Michael Drozdowski on 29/10/13.
+//  Created by Michael Drozdowski on 1/11/2013.
 //  Copyright (c) 2013 Michael Drozdowski. All rights reserved.
 //
 
-#import "HypnosisterAppDelegate.h"
-#import "HypnosisView.h"
-#import "BNRLogoView.h"
+#import "RotationAppDelegate.h"
+#import "HeavyViewController.h"
 
-@implementation HypnosisterAppDelegate
+@implementation RotationAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    // Get Device Object
+    UIDevice *device = [UIDevice currentDevice];
     
-    CGRect screenRect = [[self window] bounds];
+    // TEll it to start monitoring the accelerometer for orientation
+    [device beginGeneratingDeviceOrientationNotifications];
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:screenRect];
-    [scrollView setMinimumZoomScale:1.0];
-    [scrollView setMaximumZoomScale:5.0];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    [scrollView setDelegate:self];
+    [nc addObserver:self
+           selector:@selector(orientationChanged:)
+               name:UIDeviceOrientationDidChangeNotification
+             object:device];
     
-    [[self window] addSubview:scrollView];
-
-    CGRect bigRect = screenRect;
-    view = [[HypnosisView alloc] initWithFrame:screenRect];
-    
-    [scrollView addSubview:view];
-    
-    screenRect.origin.x = screenRect.size.width;
-    
-    
-    [scrollView setContentSize:bigRect.size];
-    
-    
-    
-    CGRect logoRect = CGRectMake(2, 2, 120, 120);
-    BNRLogoView *logoView = [[BNRLogoView alloc] initWithFrame:logoRect];
-    [view addSubview:logoView];
-    
-    
-    BOOL success = [view becomeFirstResponder];
-    if (success) {
-        NSLog(@"HypnosisView became the first responder");
-    } else {
-        NSLog(@"Could not become first responder");
-    }
+    HeavyViewController *hvc = [[HeavyViewController alloc] init];
+    [[self window] setRootViewController:hvc];
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
 
-- (BOOL)prefersStatusBarHidden
+- (void)orientationChanged:(NSNotification *)note
 {
-    return YES;
-}
-
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    return view;
+    NSLog(@"Orientation Changed: %d", [[note object] orientation]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -1,71 +1,45 @@
 //
-//  HypnosisterAppDelegate.m
-//  Hypnosister
+//  HypnoAppDelegate.m
+//  HypnoTime
 //
-//  Created by Michael Drozdowski on 29/10/13.
+//  Created by Michael Drozdowski on 31/10/2013.
 //  Copyright (c) 2013 Michael Drozdowski. All rights reserved.
 //
 
-#import "HypnosisterAppDelegate.h"
-#import "HypnosisView.h"
-#import "BNRLogoView.h"
+#import "HypnoAppDelegate.h"
+#import "HypnosisViewController.h"
+#import "TimeViewController.h"
+#import "MapViewController.h"
 
-@implementation HypnosisterAppDelegate
+@implementation HypnoAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    
-    CGRect screenRect = [[self window] bounds];
-    
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:screenRect];
-    [scrollView setMinimumZoomScale:1.0];
-    [scrollView setMaximumZoomScale:5.0];
-    
-    [scrollView setDelegate:self];
-    
-    [[self window] addSubview:scrollView];
-
-    CGRect bigRect = screenRect;
-    view = [[HypnosisView alloc] initWithFrame:screenRect];
-    
-    [scrollView addSubview:view];
-    
-    screenRect.origin.x = screenRect.size.width;
     
     
-    [scrollView setContentSize:bigRect.size];
+    HypnosisViewController *hvc = [[HypnosisViewController alloc] init];
+    
+    TimeViewController *tvc = [[TimeViewController alloc] init];
+    
+    MapViewController *mvc = [[MapViewController alloc] init];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    
+    NSArray *viewControllers = [NSArray arrayWithObjects:hvc, tvc, mvc, nil];
+    
+    [tabBarController setViewControllers:viewControllers];
     
     
+    [[self window] setRootViewController:tabBarController];
     
-    CGRect logoRect = CGRectMake(2, 2, 120, 120);
-    BNRLogoView *logoView = [[BNRLogoView alloc] initWithFrame:logoRect];
-    [view addSubview:logoView];
-    
-    
-    BOOL success = [view becomeFirstResponder];
-    if (success) {
-        NSLog(@"HypnosisView became the first responder");
-    } else {
-        NSLog(@"Could not become first responder");
-    }
     
     self.window.backgroundColor = [UIColor whiteColor];
+    self.window.tintColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     return YES;
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    return view;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

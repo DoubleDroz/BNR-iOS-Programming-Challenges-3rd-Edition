@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B83E5998-2788-42B0-BD0A-41892B99930A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HypnoTime</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9F0B5A76-312D-4BE5-9A98-A8C90686D733</key>
+		<string>https://github.com/DoubleDroz/BNR-iOS-Programming-Challenges-3rd-Edition.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HypnoTime/HypnoTime.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9F0B5A76-312D-4BE5-9A98-A8C90686D733</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/DoubleDroz/BNR-iOS-Programming-Challenges-3rd-Edition.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9F0B5A76-312D-4BE5-9A98-A8C90686D733</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9F0B5A76-312D-4BE5-9A98-A8C90686D733</string>
+			<key>IDESourceControlWCCName</key>
+			<string>iOS Programming</string>
+		</dict>
+	</array>
+</dict>
+</plist>

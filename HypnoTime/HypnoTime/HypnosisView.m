@@ -10,7 +10,7 @@
 
 @implementation HypnosisView
 
-@synthesize circleColor, colorArray;
+@synthesize circleColor;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,15 +18,37 @@
     if (self) {
         [self setBackgroundColor:[UIColor clearColor]];
         [self setCircleColor:[UIColor lightGrayColor]];
-        colorArray = [[NSArray alloc] initWithObjects:[UIColor blueColor], [UIColor greenColor], [UIColor purpleColor], [UIColor yellowColor], [UIColor brownColor], nil];
         
-        NSTimer *t = [NSTimer scheduledTimerWithTimeInterval:.0001 target:self selector:@selector(shakeAndBake) userInfo:nil repeats:YES];
+        NSArray *colors = [NSArray arrayWithObjects:@"Red", @"Green", @"Blue", nil];
+        colorControl = [[UISegmentedControl alloc] initWithItems:colors];
+        colorControl.frame = CGRectMake(self.bounds.size.width / 2 - 100, 30, 200, 30);
+        [self addSubview:colorControl];
         
-        
-        
-        
+        [colorControl addTarget:self action:@selector(changedSegmentedControl:) forControlEvents:UIControlEventValueChanged];
     }
+    
+    
     return self;
+}
+
+- (void)changedSegmentedControl:(id)sender
+{
+    colorControl = sender;
+    NSLog(@"Someone selected a different segment: %ld", (long)colorControl.selectedSegmentIndex);
+    
+    switch (colorControl.selectedSegmentIndex) {
+        case 0:
+            [self setCircleColor:[UIColor redColor]];
+            break;
+        case 1:
+            [self setCircleColor:[UIColor greenColor]];
+            break;
+        case 2:
+            [self setCircleColor:[UIColor blueColor]];
+            break;
+        default:
+            break;
+    }
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -57,13 +79,8 @@
  
     for (float currentRadius = maxRadius; currentRadius > 0; currentRadius -= 20) {
         CGContextAddArc(ctx, center.x, center.y, currentRadius, 0.0, M_PI * 2.0, YES);
-        [self setCircleColor:[colorArray objectAtIndex:(arc4random() % [colorArray count])]];
-        [[self circleColor] setStroke];
         CGContextStrokePath(ctx);
     }
-    
-    // Save the original context *before* adding some shadow
-    CGContextSaveGState(ctx);
     
     NSString *text = @"You are getting sleepy.";
     
@@ -86,42 +103,14 @@
     
     [text drawInRect:textRect
             withFont:font];
-    
-    // Restore the context to its pre-shadow added state
-    CGContextRestoreGState(ctx);
-    [[UIColor greenColor] setStroke];
-    
-    CGContextMoveToPoint(ctx, center.x - 20, center.y);
-    CGContextAddLineToPoint(ctx, center.x + 20, center.y);
-    CGContextSetLineWidth(ctx, 2);
-    
-    
-    
-    
-    CGContextStrokePath(ctx);
-    
-    CGContextMoveToPoint(ctx, center.x, center.y - 20);
-    CGContextAddLineToPoint(ctx, center.x, center.y + 20);
-    CGContextStrokePath(ctx);
-    
 }
 
 - (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
     if (motion == UIEventSubtypeMotionShake){
         NSLog(@"Device started shaking!");
-        NSUInteger randomIndex = arc4random() % [colorArray count];
-        
-        [self setCircleColor:[colorArray objectAtIndex:randomIndex]];
+        [self setCircleColor:[UIColor redColor]];
     }
-}
-
-- (void)shakeAndBake
-{
-    NSLog(@"Device started shaking!");
-    NSUInteger randomIndex = arc4random() % [colorArray count];
-    
-    [self setCircleColor:[colorArray objectAtIndex:randomIndex]];
 }
 
 @end
